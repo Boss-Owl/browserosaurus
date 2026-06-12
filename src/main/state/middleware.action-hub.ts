@@ -90,7 +90,7 @@ export const actionHubMiddleware =
     // Main's process is ready
     if (readiedApp.match(action)) {
       // Hide from dock and cmd-tab
-      app.dock.hide()
+      app.dock?.hide()
       createWindows()
       createTray()
       initUpdateChecker()
