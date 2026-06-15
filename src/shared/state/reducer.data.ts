@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import type { AppName } from '../../config/apps.js'
-import { CARROT_URL } from '../../config/constants.js'
 import {
   availableUpdate,
   downloadedUpdate,
@@ -14,7 +13,6 @@ import {
   startedScanning,
 } from '../../main/state/actions.js'
 import {
-  clickedDonate,
   clickedUpdateBar,
   startedPicker,
 } from '../../renderers/picker/state/actions.js'
@@ -95,10 +93,6 @@ const data = createReducer<Data>(defaultData, (builder) =>
 
     .addCase(openedUrl, (state, action) => {
       state.url = action.payload
-    })
-
-    .addCase(clickedDonate, (state) => {
-      state.url = CARROT_URL
     })
 
     .addCase(clickedTabButton, (state, action) => {

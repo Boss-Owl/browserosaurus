@@ -28,21 +28,6 @@ const useInstalledApps = (): InstalledApp[] => {
     }))
 }
 
-const useIsSupportMessageHidden = (): boolean => {
-  const supportMessageNumber = useSelector(
-    (state) => state.storage.supportMessage,
-  )
-
-  const ONE_WEEK = 604_800_000
-
-  return (
-    // Hidden by user
-    supportMessageNumber === -1 ||
-    // Snoozing
-    supportMessageNumber > Date.now() - ONE_WEEK
-  )
-}
-
 const useKeyCodeMap = (): Record<string, string> =>
   useShallowEqualSelector((state) => state.data.keyCodeMap)
 
@@ -50,7 +35,6 @@ export {
   InstalledApp,
   useDeepEqualSelector,
   useInstalledApps,
-  useIsSupportMessageHidden,
   useKeyCodeMap,
   useSelector,
   useShallowEqualSelector,

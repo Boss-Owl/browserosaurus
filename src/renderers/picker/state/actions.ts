@@ -24,13 +24,8 @@ const pressedKey = picker<{
 const clickedUrlBar = picker('url-bar/clicked')
 const clickedUpdateBar = picker('update-bar/clicked')
 
-const clickedDonate = picker('donate/clicked')
-const clickedMaybeLater = picker('maybe-later/clicked')
-
 export {
   clickedApp,
-  clickedDonate,
-  clickedMaybeLater,
   clickedUpdateBar,
   clickedUrlBar,
   pressedKey,
