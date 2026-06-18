@@ -1,31 +1,22 @@
 // @ts-check
 
+import { MakerDMG } from '@electron-forge/maker-dmg'
 import { MakerZIP } from '@electron-forge/maker-zip'
 import { VitePlugin } from '@electron-forge/plugin-vite'
 
 /** @type {import('@electron-forge/shared-types').ForgeConfig} */
 const config = {
-  makers: [new MakerZIP({}, ['darwin'])],
+  makers: [new MakerZIP({}, ['darwin']), new MakerDMG({}, ['darwin'])],
   packagerConfig: {
     appBundleId: 'com.browserosaurus',
     appCategoryType: 'public.app-category.developer-tools',
     asar: false,
     extendInfo: 'plist/Info.plist',
     icon: 'src/shared/static/icon/icon.icns',
-    osxNotarize: process.env.CI
-      ? undefined
-      : {
-          keychain: '~/Library/Keychains/login.keychain-db',
-          keychainProfile: 'AC_PASSWORD',
-        },
-    osxSign: process.env.CI
-      ? undefined
-      : {
-          optionsForFile: () => ({
-            entitlements: 'plist/entitlements.mac.plist',
-            'hardened-runtime': true,
-          }),
-        },
+    // 個人用: 署名・公証を無効化（adhoc署名で自分のMacでは問題なく動く）
+    // ※ BOSS指定の値はJSでは未定義変数になるため、無効化を意味する undefined を使用
+    osxNotarize: undefined,
+    osxSign: undefined,
     protocols: [
       {
         name: 'HTTP link',

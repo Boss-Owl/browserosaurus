@@ -8,10 +8,6 @@ import {
   retrievedInstalledApps,
 } from '../../main/state/actions.js'
 import {
-  clickedDonate,
-  clickedMaybeLater,
-} from '../../renderers/picker/state/actions.js'
-import {
   confirmedReset,
   reorderedApp,
   updatedHotCode,
@@ -23,7 +19,6 @@ type Storage = {
     hotCode: string | null
     isInstalled: boolean
   }[]
-  supportMessage: number
   isSetup: boolean
   height: number
 }
@@ -32,7 +27,6 @@ const defaultStorage: Storage = {
   apps: [],
   height: 200,
   isSetup: false,
-  supportMessage: 0,
 }
 
 const storage = createReducer<Storage>(defaultStorage, (builder) =>
@@ -86,14 +80,6 @@ const storage = createReducer<Storage>(defaultStorage, (builder) =>
       )
 
       state.apps[appIndex].hotCode = hotCode
-    })
-
-    .addCase(clickedDonate, (state) => {
-      state.supportMessage = -1
-    })
-
-    .addCase(clickedMaybeLater, (state) => {
-      state.supportMessage = Date.now()
     })
 
     .addCase(changedPickerWindowBounds, (state, action) => {
