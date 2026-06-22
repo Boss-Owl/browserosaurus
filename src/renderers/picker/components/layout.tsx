@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux'
 import { Spinner } from '../../shared/components/atoms/spinner.js'
 import {
   useDeepEqualSelector,
-  useInstalledApps,
   useKeyCodeMap,
   useSelector,
+  useVisibleApps,
 } from '../../shared/state/hooks.js'
 import { appsRef, appsScrollerRef } from '../refs.js'
 import { clickedApp, startedPicker } from '../state/actions.js'
@@ -37,7 +37,7 @@ const App: React.FC = () => {
    */
   useKeyboardEvents()
 
-  const apps = useInstalledApps()
+  const apps = useVisibleApps()
   const url = useSelector((state) => state.data.url)
   const icons = useDeepEqualSelector((state) => state.data.icons)
 

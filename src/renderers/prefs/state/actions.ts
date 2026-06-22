@@ -25,6 +25,10 @@ const reorderedApp = prefs<{ sourceName: AppName; destinationName: AppName }>(
   'app/reordered',
 )
 
+const toggledAppVisibility = prefs<{ appName: AppName }>(
+  'app-visibility/toggled',
+)
+
 const clickedHomepageButton = prefs('homepage-button/clicked')
 const clickedOpenIssueButton = prefs('open-issue-button/clicked')
 
@@ -39,5 +43,6 @@ export {
   confirmedReset,
   reorderedApp,
   startedPrefs,
+  toggledAppVisibility,
   updatedHotCode,
 }

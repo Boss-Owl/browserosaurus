@@ -158,7 +158,9 @@ export const actionHubMiddleware =
       // App hotkey
       else {
         const foundApp = nextState.storage.apps.find(
-          (storedApp) => storedApp.hotCode === action.payload.physicalKey,
+          (storedApp) =>
+            storedApp.hotCode === action.payload.physicalKey &&
+            storedApp.isVisible !== false,
         )
 
         if (!action.payload.metaKey && foundApp) {

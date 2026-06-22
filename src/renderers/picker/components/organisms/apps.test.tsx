@@ -58,21 +58,25 @@ test('kitchen sink', async () => {
           {
             hotCode: null,
             isInstalled: true,
+            isVisible: true,
             name: 'Firefox',
           },
           {
             hotCode: null,
             isInstalled: true,
+            isVisible: true,
             name: 'Safari',
           },
           {
             hotCode: null,
             isInstalled: false,
+            isVisible: true,
             name: 'Opera',
           },
           {
             hotCode: null,
             isInstalled: true,
+            isVisible: true,
             name: 'Brave Browser',
           },
         ],
@@ -121,6 +125,40 @@ test('kitchen sink', async () => {
   )
 })
 
+test('should not show apps hidden from the picker', async () => {
+  render(<Wrapper />)
+  const win = new electron.BrowserWindow()
+  await win.webContents.send(
+    Channel.MAIN,
+    receivedRendererStartupSignal({
+      data: { ...defaultData },
+      storage: {
+        apps: [
+          {
+            hotCode: null,
+            isInstalled: true,
+            isVisible: true,
+            name: 'Firefox',
+          },
+          {
+            hotCode: null,
+            isInstalled: true,
+            isVisible: false,
+            name: 'Safari',
+          },
+        ],
+        height: 200,
+        isSetup: true,
+      },
+    }),
+  )
+
+  expect(screen.getByRole('button', { name: 'Firefox App' })).toBeVisible()
+  expect(
+    screen.queryByRole('button', { name: 'Safari App' }),
+  ).not.toBeInTheDocument()
+})
+
 test('should show spinner when no installed apps are found', async () => {
   render(<Wrapper />)
   const win = new electron.BrowserWindow()
@@ -133,6 +171,7 @@ test('should show spinner when no installed apps are found', async () => {
           {
             hotCode: 'KeyS',
             isInstalled: false,
+            isVisible: true,
             name: 'Safari',
           },
         ],
@@ -158,6 +197,7 @@ test('should use hotkey', async () => {
           {
             hotCode: 'KeyS',
             isInstalled: true,
+            isVisible: true,
             name: 'Safari',
           },
         ],
@@ -200,6 +240,7 @@ test('should use hotkey with alt', async () => {
           {
             hotCode: 'KeyS',
             isInstalled: true,
+            isVisible: true,
             name: 'Safari',
           },
         ],

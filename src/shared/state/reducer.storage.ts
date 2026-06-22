@@ -10,6 +10,7 @@ import {
 import {
   confirmedReset,
   reorderedApp,
+  toggledAppVisibility,
   updatedHotCode,
 } from '../../renderers/prefs/state/actions.js'
 
@@ -18,6 +19,7 @@ type Storage = {
     name: AppName
     hotCode: string | null
     isInstalled: boolean
+    isVisible: boolean
   }[]
   isSetup: boolean
   height: number
@@ -47,6 +49,8 @@ const storage = createReducer<Storage>(defaultStorage, (builder) =>
 
       for (const storedApp of state.apps) {
         storedApp.isInstalled = installedAppNames.includes(storedApp.name)
+        // Backfill visibility for apps stored before this field existed.
+        storedApp.isVisible ??= true
       }
 
       for (const installedAppName of installedAppNames) {
@@ -58,6 +62,7 @@ const storage = createReducer<Storage>(defaultStorage, (builder) =>
           state.apps.push({
             hotCode: null,
             isInstalled: true,
+            isVisible: true,
             name: installedAppName,
           })
         }
@@ -84,6 +89,16 @@ const storage = createReducer<Storage>(defaultStorage, (builder) =>
 
     .addCase(changedPickerWindowBounds, (state, action) => {
       state.height = action.payload.height
+    })
+
+    .addCase(toggledAppVisibility, (state, action) => {
+      const app = state.apps.find(
+        (storedApp) => storedApp.name === action.payload.appName,
+      )
+
+      if (app) {
+        app.isVisible = !(app.isVisible ?? true)
+      }
     })
 
     .addCase(reorderedApp, (state, action) => {

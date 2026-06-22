@@ -16,6 +16,7 @@ const useDeepEqualSelector: TypedUseSelectorHook<RootState> = (selector) =>
 type InstalledApp = {
   name: AppName
   hotCode: string | null
+  isVisible: boolean
 }
 
 const useInstalledApps = (): InstalledApp[] => {
@@ -24,9 +25,16 @@ const useInstalledApps = (): InstalledApp[] => {
     .filter((storedApp) => storedApp.isInstalled)
     .map((storedApp) => ({
       hotCode: storedApp.hotCode,
+      isVisible: storedApp.isVisible ?? true,
       name: storedApp.name,
     }))
 }
+
+/**
+ * Apps shown in the picker: installed and not hidden by the user.
+ */
+const useVisibleApps = (): InstalledApp[] =>
+  useInstalledApps().filter((app) => app.isVisible)
 
 const useKeyCodeMap = (): Record<string, string> =>
   useShallowEqualSelector((state) => state.data.keyCodeMap)
@@ -38,4 +46,5 @@ export {
   useKeyCodeMap,
   useSelector,
   useShallowEqualSelector,
+  useVisibleApps,
 }
