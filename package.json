@@ -19,6 +19,7 @@
   "scripts": {
     "doctor": "npm run lint && npm run typecheck && npm run test",
     "icns": "cd ./src/shared/static/icon && ../../../../scripts/png2icns.sh icon.png",
+    "install:local": "npm run package:arm && rm -rf /Applications/Browserosaurus.app && cp -R out/Browserosaurus-darwin-arm64/Browserosaurus.app /Applications/ && xattr -dr com.apple.quarantine /Applications/Browserosaurus.app && echo '\\n✓ /Applications/Browserosaurus.app updated (arm64, local build)'",
     "lint": "eslint .",
     "list-apps": "ts-node ./scripts/list-installed-apps",
     "make": "electron-forge make --arch=arm64",
