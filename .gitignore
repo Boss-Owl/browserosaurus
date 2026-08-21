@@ -4,3 +4,11 @@ out
 .env
 .idea
 .vite
+
+# --- claude-artifacts (auto, 2026-08-21) ---
+.claude/
+outputs/
+local-agent-mode-sessions/
+.DS_Store
+*.claude-session*
+# --- end claude-artifacts ---
